@@ -19,6 +19,14 @@ Skill for working with the `treemd` markdown viewer and query tool.
 
 For scripted/agent tasks, always use CLI mode. TUI mode is reserved for human interactive viewing.
 
+## Agent Command Gate (Mandatory)
+
+Before invoking `treemd`, include at least one non-interactive action flag: `--tree`, `--list`/`-l`, `--count`, `--at-line`, `--section`/`-s`, `--query`/`-q`, `--query-help`, `--help`, or `--version`.
+
+Never invoke `treemd` with only a file path, a directory, a glob, or no arguments. Those forms launch the interactive TUI or file picker and can block an agent session.
+
+If no non-interactive action fits the task, do not invoke `treemd`; use another CLI workflow instead.
+
 Verify that the installed CLI is available and record its version before relying on version-sensitive tql or output-format behavior:
 
 ```bash
@@ -143,19 +151,9 @@ Full tql syntax reference: `references/query-language.md`.
 cat README.md | treemd -l -            # Read markdown from stdin
 ```
 
-## TUI Mode
+## TUI Mode (Human-only)
 
-Reserved for human interactive sessions only. Not usable by agents.
-
-```bash
-treemd FILE.md          # Launch dual-pane interactive viewer
-treemd ./docs/          # Open file picker in directory
-treemd *.md             # Open multi-file picker
-```
-
-Keybindings: vim-style (`j`/`k` for up/down, `h`/`l` for collapse/expand, `/` for search, `q` for quit).
-
-Themes: `--theme <OceanDark|Nord|Dracula|Solarized|Monokai|Gruvbox|TokyoNight|CatppuccinMocha>`
+Do not invoke TUI or file picker modes from agent tasks. Keep interactive keybindings and themes in human-facing documentation, outside this agent skill.
 
 ## Integration Patterns
 
